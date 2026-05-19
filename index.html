@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ĐỀ KIỂM TRA CUỐI HỌC KÌ 2 TOÁN 6 - THCS CHU VĂN AN</title>
+    <title>ĐỀ ÔN TẬP KIỂM TRA CUỐI HỌC KÌ 2 TOÁN 6 - THCS CHU VĂN AN</title>
     <style>
         :root {
             --text-color: #000000;
@@ -177,7 +177,7 @@
 
         .answer-table input[type="text"]:focus {
             outline: none;
-            background-color: #eef7ff;
+            background-color: #eef8e8ff;
         }
 
         .essay-dots-container {
@@ -407,7 +407,7 @@
         <div class="sub-part-title">A. Số học, Đại số & Thống kê (Toán Số)</div>
         
         <div class="question-item">
-            <p class="question-text"><span class="bold-prefix">Câu 43.</span> Tính giá trị biểu thức sau một cách hợp lý: A = (-1,2) * 3,5 + (-1,2) * 6,5</p>
+            <p class="question-text"><span class="bold-prefix">Câu 43.</span> Tính giá trị biểu thức sau một cách hợp lý: A = (-1,2) x 3,5 + (-1,2) x 6,5</p>
             <div class="essay-dots-container">
                 <textarea class="essay-textarea" id="essay_q43" rows="4" placeholder="Học sinh ghi lời giải câu 43 tại đây..."></textarea>
             </div>
@@ -522,12 +522,12 @@
             }
         }
 
-        let partsScore = ((exactCount / autoQuestions) * 9.0).toFixed(2);
+        let partsScore = ((exactCount / autoQuestions) * 10.0).toFixed(2);
         const resultString = `${exactCount}/${autoQuestions} câu đúng`;
 
         const resultBox = document.getElementById('result-box');
         resultBox.style.display = 'block';
-        resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 9.00 <br><span style="font-size: 11pt; font-weight: normal; color: #666;">(Hệ thống đang tự động gửi toàn bộ bài làm từ câu 1-50 về cho Hoàng...)</span>`;
+        resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 10.00 <br><span style="font-size: 11pt; font-weight: normal; color: #666;">(Hệ thống đang tự động gửi toàn bộ bài làm từ câu 1-50 về cho Máy Chủ...)</span>`;
         resultBox.scrollIntoView({ behavior: 'smooth' });
 
         const hoTen = document.getElementById('hoc_ten').value.trim() || "Ẩn danh";
@@ -564,10 +564,10 @@
 
         emailjs.send('service_eekin7r', 'template_4uwbkqs', templateParams)
             .then(function(response) {
-                resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 9.00 <br><span style="font-size: 11pt; font-weight: bold; color: #008000;">✓ Toàn bộ bài làm từ câu 1 - 50 đã được gửi đến Hoàng thành công!</span>`;
+                resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 10.00 <br><span style="font-size: 11pt; font-weight: bold; color: #008000;">✓ Toàn bộ bài làm từ câu 1 - 50 đã được gửi đến Máy Chủ thành công!</span>`;
             }, function(error) {
                 console.log('Lỗi kết nối EmailJS:', error);
-                resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 9.00 <br><span style="font-size: 11pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại cấu hình API Keys trong code.</span>`;
+                resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 10.00 <br><span style="font-size: 11pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại cấu hình API Keys trong code.</span>`;
             });
     }
 </script>
