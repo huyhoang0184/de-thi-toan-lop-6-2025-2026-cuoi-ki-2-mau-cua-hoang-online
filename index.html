@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ĐỀ KIỂM TRA CUỐI HỌC KÌ 2 TOÁN 6 - THCS CHU VĂN AN</title>
+    <style>
+        :root {
+            --text-color: #000000;
+            --bg-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f0f0;
+            color: var(--text-color);
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+            font-size: 14pt;
+        }
+
+        .paper-page {
+            max-width: 850px;
+            margin: 0 auto 20px auto;
+            background: var(--bg-color);
+            padding: 40px 50px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .header-table td {
+            border: none;
+            text-align: center;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        .header-left {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13pt;
+        }
+
+        .header-left .sub-title {
+            font-weight: bold;
+            text-decoration: underline;
+            font-size: 12pt;
+        }
+
+        .header-right {
+            font-weight: bold;
+            font-size: 13pt;
+        }
+
+        .header-right .exam-name {
+            text-transform: uppercase;
+            font-size: 14pt;
+        }
+
+        .header-right .subject {
+            font-style: italic;
+            font-size: 13pt;
+            margin-top: 3px;
+        }
+
+        .header-right .time-allowed {
+            font-weight: bold;
+            margin-top: 5px;
+            font-size: 12pt;
+        }
+
+        .header-right .time-allowed span {
+            text-decoration: underline;
+        }
+
+        .part-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            clear: both;
+            border-left: 4px solid #000;
+            padding-left: 10px;
+        }
+
+        .sub-part-title {
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #333;
+            text-decoration: underline;
+        }
+
+        .question-item {
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .question-text {
+            font-weight: normal;
+            margin: 0 0 8px 0;
+        }
+
+        .question-text span.bold-prefix {
+            font-weight: bold;
+        }
+
+        .options-plain {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+
+        .answer-sheet-container {
+            border: 2px solid #000;
+            padding: 20px;
+            margin: 25px 0;
+            background-color: #fff;
+        }
+
+        .answer-sheet-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 15pt;
+            letter-spacing: 1px;
+        }
+
+        .answer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+
+        .answer-table th, .answer-table td {
+            border: 1px solid #000;
+            text-align: center;
+            padding: 6px;
+            font-size: 11pt;
+            width: 9%;
+        }
+
+        .answer-table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .answer-table td:first-child, .answer-table th:first-child {
+            width: 10%;
+            font-weight: bold;
+            background-color: #fdfdfd;
+        }
+
+        .answer-table input[type="text"] {
+            width: 90%;
+            border: none;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: transparent;
+        }
+
+        .answer-table input[type="text"]:focus {
+            outline: none;
+            background-color: #eef7ff;
+        }
+
+        .essay-dots-container {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .essay-textarea {
+            width: 100%;
+            border: none;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14pt;
+            line-height: 2rem;
+            background: linear-gradient(transparent, transparent calc(2rem - 1px), #999 calc(2rem - 1px), #999 2rem);
+            background-size: 100% 2rem;
+            resize: vertical;
+            padding: 0 5px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .btn-submit {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 15pt;
+            font-weight: bold;
+            padding: 12px 40px;
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #000;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        #result-box {
+            margin-top: 25px;
+            padding: 20px;
+            border: 2px dashed #000;
+            background-color: #fff;
+            text-align: center;
+            font-size: 18pt;
+            font-weight: bold;
+            display: none;
+        }
+
+        .page-footer {
+            text-align: center;
+            font-size: 11pt;
+            margin-top: 40px;
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init("hK1aROrfrqVaTFDfh"); 
+       })();
+    </script>
+</head>
+<body>
+
+<div class="paper-page">
+    <table class="header-table">
+        <tr>
+            <td class="header-left" style="text-align: left; padding-left: 20px;">
+                TRƯỜNG THCS CHU VĂN AN<br>
+                <span style="font-weight: bold;">TỔ TOÁN - TIN</span><br>
+                <p class="sub-title" style="text-align: left; margin-top: 5px;">(Đề có 01 trang)</p>
+            </td>
+            <td class="header-right">
+                ĐỀ KIỂM TRA CUỐI HỌC KÌ 2<br>
+                <span class="exam-name">NĂM HỌC 2025 – 2026</span><br>
+                <div class="subject">Môn: Toán – Lớp 6</div>
+                <div class="time-allowed">Thời gian làm bài: <span>90 phút</span> (không kể thời gian giao đề)</div>
+            </td>
+        </tr>
+    </table>
+
+    <div style="margin: 20px auto; max-width: 100%; border: 1px solid #000; padding: 15px; font-family: 'Times New Roman', Times, serif; font-size: 14pt;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <div style="flex: 2; display: flex;">
+                Họ và tên học sinh: <input type="text" id="hoc_ten" style="flex: 1; border: none; border-bottom: 1px dashed #000; font-family: 'Times New Roman'; font-size: 14pt; padding-left: 10px; background: transparent;">
+            </div>
+            <div style="flex: 1; display: flex; padding-left: 20px;">
+                Lớp: <input type="text" id="lop" style="flex: 1; border: none; border-bottom: 1px dashed #000; font-family: 'Times New Roman'; font-size: 14pt; padding-left: 10px; background: transparent; text-align: center;">
+            </div>
+        </div>
+        <div style="display: flex;">
+            <div style="flex: 1; display: flex;">
+                Số báo danh: <input type="text" id="sbd" style="width: 150px; border: none; border-bottom: 1px dashed #000; font-family: 'Times New Roman'; font-size: 14pt; padding-left: 10px; background: transparent; text-align: center;">
+            </div>
+            <div style="flex: 1; display: flex; padding-left: 20px;">
+                Phòng thi số: <input type="text" id="phong_thi" style="width: 100px; border: none; border-bottom: 1px dashed #000; font-family: 'Times New Roman'; font-size: 14pt; padding-left: 10px; background: transparent; text-align: center;">
+            </div>
+        </div>
+    </div>
+
+    <form id="examForm">
+        
+        <div class="answer-sheet-container">
+            <p class="answer-sheet-title">PHẦN BÀI LÀM CỦA HỌC SINH</p>
+            <p style="font-size: 11pt; font-style: italic; margin-top: -5px; margin-bottom: 15px; text-align: center;">
+                (Câu 1-16: Điền A, B, C, D | Câu 17-30: Điền Đ hoặc S | Câu 31-42: Điền trực tiếp đáp số)
+            </p>
+            
+            <table class="answer-table">
+                <tr><th>Câu TN</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr>
+                <tr><td>ĐA</td>
+                    <td><input type="text" id="ans_q1" maxlength="1"></td><td><input type="text" id="ans_q2" maxlength="1"></td><td><input type="text" id="ans_q3" maxlength="1"></td><td><input type="text" id="ans_q4" maxlength="1"></td><td><input type="text" id="ans_q5" maxlength="1"></td>
+                    <td><input type="text" id="ans_q6" maxlength="1"></td><td><input type="text" id="ans_q7" maxlength="1"></td><td><input type="text" id="ans_q8" maxlength="1"></td><td><input type="text" id="ans_q9" maxlength="1"></td><td><input type="text" id="ans_q10" maxlength="1"></td>
+                </tr>
+            </table>
+
+            <table class="answer-table">
+                <tr><th>Câu</th><th>11 (TN)</th><th>12 (TN)</th><th>13 (TN)</th><th>14 (TN)</th><th>15 (TN)</th><th>16 (TN)</th><th style="background-color: #ffebeb;">17 (Đ/S)</th><th style="background-color: #ffebeb;">18 (Đ/S)</th><th style="background-color: #ffebeb;">19 (Đ/S)</th><th style="background-color: #ffebeb;">20 (Đ/S)</th></tr>
+                <tr><td>ĐA</td>
+                    <td><input type="text" id="ans_q11" maxlength="1"></td><td><input type="text" id="ans_q12" maxlength="1"></td><td><input type="text" id="ans_q13" maxlength="1"></td><td><input type="text" id="ans_q14" maxlength="1"></td><td><input type="text" id="ans_q15" maxlength="1"></td><td><input type="text" id="ans_q16" maxlength="1"></td>
+                    <td><input type="text" id="ans_q17" maxlength="4"></td><td><input type="text" id="ans_q18" maxlength="4"></td><td><input type="text" id="ans_q19" maxlength="4"></td><td><input type="text" id="ans_q20" maxlength="4"></td>
+                </tr>
+            </table>
+
+            <table class="answer-table">
+                <tr><th style="background-color: #ffebeb;">Câu Đ/S</th><th style="background-color: #ffebeb;">21</th><th style="background-color: #ffebeb;">22</th><th style="background-color: #ffebeb;">23</th><th style="background-color: #ffebeb;">24</th><th style="background-color: #ffebeb;">25</th><th style="background-color: #ffebeb;">26</th><th style="background-color: #ffebeb;">27</th><th style="background-color: #ffebeb;">28</th><th style="background-color: #ffebeb;">29</th><th style="background-color: #ffebeb;">30</th></tr>
+                <tr><td>ĐA</td>
+                    <td><input type="text" id="ans_q21" maxlength="4"></td><td><input type="text" id="ans_q22" maxlength="4"></td><td><input type="text" id="ans_q23" maxlength="4"></td><td><input type="text" id="ans_q24" maxlength="4"></td><td><input type="text" id="ans_q25" maxlength="4"></td>
+                    <td><input type="text" id="ans_q26" maxlength="4"></td><td><input type="text" id="ans_q27" maxlength="4"></td><td><input type="text" id="ans_q28" maxlength="4"></td><td><input type="text" id="ans_q29" maxlength="4"></td><td><input type="text" id="ans_q30" maxlength="4"></td>
+                </tr>
+            </table>
+
+            <table class="answer-table">
+                <tr><th style="background-color: #eef7ff;">Câu TLN</th><th style="background-color: #eef7ff;">31</th><th style="background-color: #eef7ff;">32</th><th style="background-color: #eef7ff;">33</th><th style="background-color: #eef7ff;">34</th><th style="background-color: #eef7ff;">35</th><th style="background-color: #eef7ff;">36</th><th style="background-color: #eef7ff;">37</th><th style="background-color: #eef7ff;">38</th><th style="background-color: #eef7ff;">39</th><th style="background-color: #eef7ff;">40</th></tr>
+                <tr><td>ĐA</td>
+                    <td><input type="text" id="ans_q31"></td><td><input type="text" id="ans_q32"></td><td><input type="text" id="ans_q33"></td><td><input type="text" id="ans_q34"></td><td><input type="text" id="ans_q35"></td>
+                    <td><input type="text" id="ans_q36"></td><td><input type="text" id="ans_q37"></td><td><input type="text" id="ans_q38"></td><td><input type="text" id="ans_q39"></td><td><input type="text" id="ans_q40"></td>
+                </tr>
+            </table>
+
+            <table class="answer-table" style="width: 30%;">
+                <tr><th style="background-color: #eef7ff;">Câu TLN</th><th style="background-color: #eef7ff;">41</th><th style="background-color: #eef7ff;">42</th></tr>
+                <tr><td>ĐA</td>
+                    <td><input type="text" id="ans_q41"></td><td><input type="text" id="ans_q42"></td>
+                </tr>
+            </table>
+        </div>
+
+        <hr style="border: 1px solid #000; margin: 30px 0;">
+
+        <div class="part-title">I. PHẦN TRẮC NGHIỆM NHIỀU LỰA CHỌN (16 Câu - 4,0 điểm)</div>
+        
+        <div class="sub-part-title">A. Số học & Số thập phân (Toán Số)</div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 1.</span> Giá trị của số thập phân 0,75 viết dưới dạng tỉ số phần trăm là:</p><div class="options-plain"><div>A. 7,5%</div><div>B. 75%</div><div>C. 0,75%</div><div>D. 750%</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 2.</span> Khi gieo 1 con xúc xắc có bao nhiêu kết quả có thể xảy ra?</p><div class="options-plain"><div>A. 6</div><div>B. 2</div><div>C. 1</div><div>D. 4</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 3.</span> An thấy rằng 40% số học sinh của lớp 6A là 20 học sinh. Vậy lớp 6A có số học sinh là</p><div class="options-plain"><div>A. 45 học sinh</div><div>B. 40 học sinh</div><div>C. 50 học sinh</div><div>D. 8 học sinh</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 4.</span> Chia đều một thanh gỗ dài 7,68 m thành 4 đoạn bằng nhau. Độ dài mỗi đoạn là (làm tròn đến hàng phần mười)</p><div class="options-plain"><div>A. 2,0 m</div><div>B. 1,9 m</div><div>C. 1,92 m</div><div>D. 1,8 m</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 5.</span> Số nguyên x nào lớn hơn -3 và nhỏ hơn -1?</p><div class="options-plain"><div>A. -4</div><div>B. -2</div><div>C. 0</div><div>D. -1</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 6.</span> Phần số nguyên của số thập phân 292,82 là</p><div class="options-plain"><div>A. 292</div><div>B. 0,82</div><div>C. 82</div><div>D. 293</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 7.</span> Một món đồ chơi có giá gốc là 100.000 đồng, nay được giảm giá 20%. Hỏi số tiền được giảm là bao nhiêu?</p><div class="options-plain"><div>A. 10.000 đ</div><div>B. 20.000 đ</div><div>C. 50.000 đ</div><div>D. 80.000 đ</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 8.</span> Tính 50% của số 84 bằng bao nhiêu?</p><div class="options-plain"><div>A. 35</div><div>B. 42</div><div>C. 84</div><div>D. 21</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 9.</span> Kết quả của phép tính nhân (-1,2) . (-0,5) bằng</p><div class="options-plain"><div>A. -0,6</div><div>B. 0,6</div><div>C. 6</div><div>D. -6</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 10.</span> Trong các số sau đây, số nào là số thập phân âm?</p><div class="options-plain"><div>A. 2,5</div><div>B. -3,14</div><div>C. 0</div><div>D. 10</div></div></div>
+
+        <div class="sub-part-title">B. Hình học trực quan & Hình học phẳng (Toán Hình)</div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 11.</span> Cho điểm M là trung điểm của đoạn thẳng AB, biết AB = 6 cm. Khi đó độ dài của đoạn thẳng MA bằng</p><div class="options-plain"><div>A. 2 cm</div><div>B. 4 cm</div><div>C. 3 cm</div><div>D. 6 cm</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 12.</span> Trong các góc sau: 15°; 35°; 45°; 80°; 90°; 115°; 120°; 150°. Có bao nhiêu góc nhọn?</p><div class="options-plain"><div>A. 3</div><div>B. 5</div><div>C. 2</div><div>D. 4</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 13.</span> Cho 3 điểm A, B, C cùng nằm trên một đường thẳng theo thứ tự đó. Có mấy đoạn thẳng trong hình vẽ?</p><div class="options-plain"><div>A. 3</div><div>B. 2</div><div>C. 1</div><div>D. 6</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 14.</span> Cho điểm M nằm giữa hai điểm A và B. Biết AM = 3 cm, AB = 8 cm. Độ dài MB bằng</p><div class="options-plain"><div>A. 11 cm</div><div>B. 8 cm</div><div>C. 3 cm</div><div>D. 5 cm</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 15.</span> Lúc mấy giờ thì kim giờ và kim phút của đồng hồ tạo thành một góc bẹt?</p><div class="options-plain"><div>A. 12 giờ</div><div>B. 5 giờ</div><div>C. 6 giờ</div><div>D. 3 giờ</div></div></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 16.</span> Kí hiệu nào sau đây thể hiện đường thẳng a đi qua điểm P?</p><div class="options-plain"><div>A. P ∈ a</div><div>B. P ∉ a</div><div>C. a ⊂ P</div><div>D. a ∈ P</div></div></div>
+
+
+        <div class="part-title">II. PHẦN CÂU HỎI ĐÚNG / SAI (14 Câu - 3,5 điểm)</div>
+        
+        <div class="sub-part-title">A. Số học & Thống kê (Toán Số)</div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 17.</span> Số thập phân -0,5 bằng số thập phân -0,50.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 18.</span> Mọi số thập phân đều là số nguyên.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 19.</span> Số âm luôn luôn nhỏ hơn số dương.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 20.</span> Số thập phân 1,5 nhỏ hơn số 1.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 21.</span> Khi tung một đồng xu hai lần, kết quả thu được chắc chắn phải có một lần mặt Sấp.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 22.</span> Số 0 là số nguyên dương.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 23.</span> Số đối của số -4,5 là số 4,5.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 24.</span> Số thập phân 0,5 lớn hơn số thập phân 0,45.</p></div>
+
+        <div class="sub-part-title">B. Hình học trực quan & Hình học phẳng (Toán Hình)</div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 25.</span> Hai tia chung gốc luôn là hai tia đối nhau.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 26.</span> Nếu M là trung điểm của AB thì M cách đều hai đầu mút A và B.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 27.</span> Góc lớn hơn góc vuông luôn luôn là góc tù.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 28.</span> Hai đường thẳng song song là hai đường thẳng không có điểm chung nào.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 29.</span> Đoạn thẳng AB là hình gồm điểm A, điểm B và tất cả các điểm nằm giữa A và B.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 30.</span> Góc bẹt là góc có số đo nhỏ nhất trong các loại góc đã học.</p></div>
+
+
+        <div class="part-title">III. PHẦN TRẢ LỜI NGẮN / ĐIỀN KHUYẾT (12 Câu - 1,5 điểm)</div>
+        
+        <div class="sub-part-title">A. Số học & Thống kê (Toán Số)</div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 31.</span> Gieo một đồng xu 10 lần, có 6 lần xuất hiện mặt Ngửa. Hỏi có bao nhiêu lần xuất hiện mặt Sấp?</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 32.</span> Tìm số nguyên x biết: x + 5 = -2</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 33.</span> Tính kết quả phép nhân: (-0,4) . (-5)</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 34.</span> Tập hợp các ước nguyên dương của số 6 gồm bao nhiêu phần tử?</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 35.</span> Đổi số thập phân 0,25 sang tỉ số phần trăm (Chỉ điền số và ký hiệu %, ví dụ: 25%)</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 36.</span> Làm tròn số thập phân 3,74 đến hàng đơn vị.</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 37.</span> Tìm số nguyên x biết rằng: x + 10 = 15. Hỏi x bằng mấy?</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 38.</span> Kết quả tính giá trị biểu thức tuyệt đối |-15| bằng bao nhiêu?</p></div>
+
+        <div class="sub-part-title">B. Hình học trực quan & Hình học phẳng (Toán Hình)</div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 39.</span> Tính diện tích hình chữ nhật biết chiều dài là 4,5 cm và chiều rộng là 2 cm. (Chỉ ghi số)</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 40.</span> Hình vuông có bao nhiêu trục đối xứng?</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 41.</span> Tính số đo góc xOy biết nó bằng một nửa số đo góc bẹt. (Chỉ điền số)</p></div>
+        <div class="question-item"><p class="question-text"><span class="bold-prefix">Câu 42.</span> Cho góc xOy bằng 60°. Góc đối đỉnh với góc xOy có số đo bằng bao nhiêu độ? (Chỉ điền số)</p></div>
+
+
+        <div class="part-title">IV. PHẦN TỰ LUẬN (8 Câu - 1,0 điểm)</div>
+        
+        <div class="sub-part-title">A. Số học, Đại số & Thống kê (Toán Số)</div>
+        
+        <div class="question-item">
+            <p class="question-text"><span class="bold-prefix">Câu 43.</span> Tính giá trị biểu thức sau một cách hợp lý: A = (-1,2) * 3,5 + (-1,2) * 6,5</p>
+            <div class="essay-dots-container">
+                <textarea class="essay-textarea" id="essay_q43" rows="4" placeholder="Học sinh ghi lời giải câu 43 tại đây..."></textarea>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <p class="question-text"><span class="bold-prefix">Câu 44.</span> Tìm số nguyên x, biết rằng: 2 * x - 1,5 = 4,5</p>
+            <div class="essay-dots-container">
+                <textarea class="essay-textarea" id="essay_q44" rows="4" placeholder="Học sinh ghi lời giải câu 44 tại đây..."></textarea>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <p class="question-text"><span class="bold-prefix">Câu 45.</span> Một lớp học có 40 học sinh gồm ba loại: Giỏi, Khá và Trung bình. Số học sinh Giỏi chiếm 25% số học sinh cả lớp. Số học sinh Khá chiếm 50% số học sinh cả lớp. Tính số học sinh Trung bình của lớp đó.</p>
+            <div class="essay-dots-container">
+                <textarea class="essay-textarea" id="essay_q45" rows="5" placeholder="Học sinh ghi lời giải câu 45 tại đây..."></textarea>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <p class="question-text"><span class="bold-prefix">Câu 46.</span> Kết quả học tập Học kì 1 của học sinh khối 6 được biểu diễn bằng biểu đồ cột. Em hãy nêu ý nghĩa và tầm quan trọng của việc thu thập và phân tích dữ liệu trong thực tế cuộc sống.</p>
+            <div class="essay-dots-container">
+                <textarea class="essay-textarea" id="essay_q46" rows="4" placeholder="Học sinh ghi ý kiến câu 46 tại đây..."></textarea>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <p class="question-text"><span class="bold-prefix">Câu 47.</span> Tính tổng các số nguyên x thỏa mãn điều kiện lớn hơn -5 và nhỏ hơn hoặc bằng 4.</p>
+            <div class="essay-dots-container">
+                <textarea class="essay-textarea" id="essay_q47" rows="4" placeholder="Học sinh ghi lời giải câu 47 tại đây..."></textarea>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <p class="question-text"><span class="bold-prefix">Câu 48.</span> Tìm một số tự nhiên x lớn nhất có hai chữ số sao cho khi lấy số đó cộng với 5 thì chia hết cho 10.</p>
+            <div class="essay-dots-container">
+                <textarea class="essay-textarea" id="essay_q48" rows="5" placeholder="Học sinh ghi chứng minh câu 48 tại đây..."></textarea>
+            </div>
+        </div>
+
+        <div class="sub-part-title">B. Hình học trực quan & Hình học phẳng (Toán Hình)</div>
+        <div class="question-item">
+            <p class="question-text"><span class="bold-prefix">Câu 49.</span> Trên cùng một tia Ox, lấy hai điểm A và B sao cho OA = 3cm, OB = 6cm. Điểm A có phải là trung điểm của đoạn thẳng OB không? Vì sao?</p>
+            <div class="essay-dots-container">
+                <textarea class="essay-textarea" id="essay_q49" rows="5" placeholder="Học sinh ghi lời giải câu 49 tại đây..."></textarea>
+            </div>
+        </div>
+
+        <div class="question-item">
+            <p class="question-text"><span class="bold-prefix">Câu 50.</span> Vẽ góc nhọn xOy. Lấy điểm M nằm bên trong góc đó. Vẽ tia OM.</p>
+            <div class="essay-dots-container">
+                <textarea class="essay-textarea" id="essay_q50" rows="4" placeholder="Học sinh vẽ hình và làm câu 50 tại đây..."></textarea>
+            </div>
+        </div>
+
+        <p style="text-align: center; font-weight: bold; margin-top: 40px; letter-spacing: 3px;">------ HẾT ------</p>
+
+        <div class="btn-container">
+            <button type="button" class="btn-submit" onclick="chamDiemThi()">NỘP BÀI THI</button>
+        </div>
+    </form>
+
+    <div id="result-box"></div>
+    <div class="page-footer">Trang 1/1</div>
+</div>
+
+<script>
+    function chamDiemThi() {
+        let exactCount = 0;
+        const autoQuestions = 42; 
+
+        // Đáp án trắc nghiệm
+        const keyAnswers = {
+            q1: 'B', q2: 'A', q3: 'C', q4: 'B', q5: 'B', q6: 'A', q7: 'B', q8: 'B', q9: 'B', q10: 'B',
+            q11: 'C', q12: 'D', q13: 'A', q14: 'D', q15: 'C', q16: 'A'
+        };
+
+        let answersLog = "--- CHI TIẾT ĐÁP ÁN CÂU 1 ĐẾN 42 ---\n"; 
+        for (let i = 1; i <= 16; i++) {
+            let userAns = document.getElementById(`ans_q` + i).value.trim().toUpperCase();
+            answersLog += `Câu ${i}: ${userAns || 'Chưa làm'} | `;
+            if (userAns === keyAnswers[`q` + i]) {
+                exactCount++;
+            }
+        }
+
+        // Đáp án Đúng Sai
+        const trueFalseKeys = {
+            q17: 'Đ', q18: 'S', q19: 'Đ', q20: 'S', q21: 'S', q22: 'S', q23: 'Đ', q24: 'Đ',
+            q25: 'S', q26: 'Đ', q27: 'S', q28: 'Đ', q29: 'Đ', q30: 'S'
+        };
+        answersLog += "\n--- ĐÁP ÁN ĐÚNG SAI (17-30) ---\n";
+        for (let i = 17; i <= 30; i++) {
+            let userAns = document.getElementById(`ans_q` + i).value.trim().toUpperCase();
+            answersLog += `Câu ${i}: ${userAns || 'Chưa làm'} | `;
+            let standardKey = trueFalseKeys[`q` + i];
+            if (standardKey === 'Đ' && (userAns === 'Đ' || userAns === 'D' || userAns === 'ĐÚNG' || userAns === 'DUNG')) exactCount++;
+            if (standardKey === 'S' && (userAns === 'S' || userAns === 'SAI')) exactCount++;
+        }
+
+        // Đáp án Trả lời ngắn
+        const shortAnswers = {
+            31: '4', 32: '-7', 33: '2', 34: '4', 35: '25%', 
+            36: '4', 37: '5', 38: '15', 39: '9', 40: '4', 41: '90', 42: '60'
+        };
+        answersLog += "\n--- ĐÁP ÁN TRẢ LỜI NGẮN (31-42) ---\n";
+        for (let i = 31; i <= 42; i++) {
+            let userAns = document.getElementById(`ans_q` + i).value.trim();
+            answersLog += `Câu ${i}: ${userAns || 'Chưa làm'} | `;
+            if (userAns === shortAnswers[i]) {
+                exactCount++;
+            }
+        }
+
+        let partsScore = ((exactCount / autoQuestions) * 9.0).toFixed(2);
+        const resultString = `${exactCount}/${autoQuestions} câu đúng`;
+
+        const resultBox = document.getElementById('result-box');
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 9.00 <br><span style="font-size: 11pt; font-weight: normal; color: #666;">(Hệ thống đang tự động gửi toàn bộ bài làm từ câu 1-50 về cho Hoàng...)</span>`;
+        resultBox.scrollIntoView({ behavior: 'smooth' });
+
+        const hoTen = document.getElementById('hoc_ten').value.trim() || "Ẩn danh";
+        const lop = document.getElementById('lop').value.trim() || "Không rõ";
+        const sbd = document.getElementById('sbd').value.trim() || "Không rõ";
+        const phongThi = document.getElementById('phong_thi').value.trim() || "Không rõ";
+
+        const essay43 = document.getElementById('essay_q43').value;
+        const essay44 = document.getElementById('essay_q44').value;
+        const essay45 = document.getElementById('essay_q45').value;
+        const essay46 = document.getElementById('essay_q46').value;
+        const essay47 = document.getElementById('essay_q47').value;
+        const essay48 = document.getElementById('essay_q48').value;
+        const essay49 = document.getElementById('essay_q49').value;
+        const essay50 = document.getElementById('essay_q50').value;
+
+        const templateParams = {
+            hoc_ten: hoTen,
+            lop: lop,
+            sbd: sbd,
+            phong_thi: phongThi,
+            ket_qua_auto: resultString,
+            diem_so: partsScore,
+            all_answers_1_42: answersLog, 
+            essay_43: essay43,
+            essay_44: essay44,
+            essay_45: essay45,
+            essay_46: essay46,
+            essay_47: essay47,
+            essay_48: essay48,
+            essay_49: essay49,
+            essay_50: essay50
+        };
+
+        emailjs.send('service_eekin7r', 'template_4uwbkqs', templateParams)
+            .then(function(response) {
+                resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 9.00 <br><span style="font-size: 11pt; font-weight: bold; color: #008000;">✓ Toàn bộ bài làm từ câu 1 - 50 đã được gửi đến Hoàng thành công!</span>`;
+            }, function(error) {
+                console.log('Lỗi kết nối EmailJS:', error);
+                resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 9.00 <br><span style="font-size: 11pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại cấu hình API Keys trong code.</span>`;
+            });
+    }
+</script>
+
+</body>
+</html>
