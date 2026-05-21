@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ĐỀ ÔN TẬP KIỂM TRA CUỐI HỌC KÌ 2 TOÁN 6 - THCS CHU VĂN AN</title>
+    <title>ĐỀ KIỂM TRA CUỐI HỌC KÌ 2 TOÁN 6 - THCS CHU VĂN AN</title>
     <style>
         :root {
             --text-color: #000000;
@@ -177,7 +177,7 @@
 
         .answer-table input[type="text"]:focus {
             outline: none;
-            background-color: #eef8e8ff;
+            background-color: #eef7ff;
         }
 
         .essay-dots-container {
@@ -230,7 +230,7 @@
             border: 2px dashed #000;
             background-color: #fff;
             text-align: center;
-            font-size: 18pt;
+            font-size: 16pt;
             font-weight: bold;
             display: none;
         }
@@ -407,7 +407,7 @@
         <div class="sub-part-title">A. Số học, Đại số & Thống kê (Toán Số)</div>
         
         <div class="question-item">
-            <p class="question-text"><span class="bold-prefix">Câu 43.</span> Tính giá trị biểu thức sau một cách hợp lý: A = (-1,2) x 3,5 + (-1,2) x 6,5</p>
+            <p class="question-text"><span class="bold-prefix">Câu 43.</span> Tính giá trị biểu thức sau một cách hợp lý: A = (-1,2) * 3,5 + (-1,2) * 6,5</p>
             <div class="essay-dots-container">
                 <textarea class="essay-textarea" id="essay_q43" rows="4" placeholder="Học sinh ghi lời giải câu 43 tại đây..."></textarea>
             </div>
@@ -466,7 +466,7 @@
         <p style="text-align: center; font-weight: bold; margin-top: 40px; letter-spacing: 3px;">------ HẾT ------</p>
 
         <div class="btn-container">
-            <button type="button" class="btn-submit" onclick="chamDiemThi()">NỘP BÀI THI</button>
+            <button type="button" class="btn-submit" onclick="guiBaiThi()">NỘP BÀI THI</button>
         </div>
     </form>
 
@@ -475,66 +475,27 @@
 </div>
 
 <script>
-    function chamDiemThi() {
-        let exactCount = 0;
-        const autoQuestions = 42; 
-
-        // Đáp án trắc nghiệm
-        const keyAnswers = {
-            q1: 'B', q2: 'A', q3: 'C', q4: 'B', q5: 'B', q6: 'A', q7: 'B', q8: 'B', q9: 'B', q10: 'B',
-            q11: 'C', q12: 'D', q13: 'A', q14: 'D', q15: 'C', q16: 'A'
-        };
-
-        let answersLog = "--- CHI TIẾT ĐÁP ÁN CÂU 1 ĐẾN 42 ---\n"; 
-        for (let i = 1; i <= 16; i++) {
-            let userAns = document.getElementById(`ans_q` + i).value.trim().toUpperCase();
-            answersLog += `Câu ${i}: ${userAns || 'Chưa làm'} | `;
-            if (userAns === keyAnswers[`q` + i]) {
-                exactCount++;
-            }
-        }
-
-        // Đáp án Đúng Sai
-        const trueFalseKeys = {
-            q17: 'Đ', q18: 'S', q19: 'Đ', q20: 'S', q21: 'S', q22: 'S', q23: 'Đ', q24: 'Đ',
-            q25: 'S', q26: 'Đ', q27: 'S', q28: 'Đ', q29: 'Đ', q30: 'S'
-        };
-        answersLog += "\n--- ĐÁP ÁN ĐÚNG SAI (17-30) ---\n";
-        for (let i = 17; i <= 30; i++) {
-            let userAns = document.getElementById(`ans_q` + i).value.trim().toUpperCase();
-            answersLog += `Câu ${i}: ${userAns || 'Chưa làm'} | `;
-            let standardKey = trueFalseKeys[`q` + i];
-            if (standardKey === 'Đ' && (userAns === 'Đ' || userAns === 'D' || userAns === 'ĐÚNG' || userAns === 'DUNG')) exactCount++;
-            if (standardKey === 'S' && (userAns === 'S' || userAns === 'SAI')) exactCount++;
-        }
-
-        // Đáp án Trả lời ngắn
-        const shortAnswers = {
-            31: '4', 32: '-7', 33: '2', 34: '4', 35: '25%', 
-            36: '4', 37: '5', 38: '15', 39: '9', 40: '4', 41: '90', 42: '60'
-        };
-        answersLog += "\n--- ĐÁP ÁN TRẢ LỜI NGẮN (31-42) ---\n";
-        for (let i = 31; i <= 42; i++) {
-            let userAns = document.getElementById(`ans_q` + i).value.trim();
-            answersLog += `Câu ${i}: ${userAns || 'Chưa làm'} | `;
-            if (userAns === shortAnswers[i]) {
-                exactCount++;
-            }
-        }
-
-        let partsScore = ((exactCount / autoQuestions) * 10.0).toFixed(2);
-        const resultString = `${exactCount}/${autoQuestions} câu đúng`;
-
+    function guiBaiThi() {
         const resultBox = document.getElementById('result-box');
         resultBox.style.display = 'block';
-        resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 10.00 <br><span style="font-size: 11pt; font-weight: normal; color: #666;">(Hệ thống đang tự động gửi toàn bộ bài làm từ câu 1-50 về cho Máy Chủ...)</span>`;
+        resultBox.innerHTML = `<span style="font-size: 11pt; font-weight: normal; color: #666;">Hệ thống đang xử lý và gửi bài làm về cho Hoàng... Phút giây hồi hộp! ⏳</span>`;
         resultBox.scrollIntoView({ behavior: 'smooth' });
 
+        // Thu thập thông tin thí sinh
         const hoTen = document.getElementById('hoc_ten').value.trim() || "Ẩn danh";
         const lop = document.getElementById('lop').value.trim() || "Không rõ";
         const sbd = document.getElementById('sbd').value.trim() || "Không rõ";
         const phongThi = document.getElementById('phong_thi').value.trim() || "Không rõ";
 
+        // Thu thập đáp án trắc nghiệm ngắn câu 1 - 42
+        let answersLog = "--- BÀI LÀM TRẮC NGHIỆM & TRẢ LỜI NGẮN (CÂU 1 - 42) ---\n";
+        for (let i = 1; i <= 42; i++) {
+            let userAns = document.getElementById(`ans_q` + i).value.trim();
+            answersLog += `Câu ${i}: ${userAns || 'Chưa làm'} | `;
+            if (i % 5 === 0) answersLog += "\n"; // Xuống dòng cho dễ nhìn
+        }
+
+        // Thu thập đáp án tự luận câu 43 - 50
         const essay43 = document.getElementById('essay_q43').value;
         const essay44 = document.getElementById('essay_q44').value;
         const essay45 = document.getElementById('essay_q45').value;
@@ -544,13 +505,14 @@
         const essay49 = document.getElementById('essay_q49').value;
         const essay50 = document.getElementById('essay_q50').value;
 
+        // Chuẩn bị tham số truyền sang EmailJS mẫu của Hoàng
         const templateParams = {
             hoc_ten: hoTen,
             lop: lop,
             sbd: sbd,
             phong_thi: phongThi,
-            ket_qua_auto: resultString,
-            diem_so: partsScore,
+            ket_qua_auto: "Tự chấm thủ công", 
+            diem_so: "Chờ chấm",
             all_answers_1_42: answersLog, 
             essay_43: essay43,
             essay_44: essay44,
@@ -562,12 +524,13 @@
             essay_50: essay50
         };
 
+        // Tiến hành gửi qua EmailJS
         emailjs.send('service_eekin7r', 'template_4uwbkqs', templateParams)
             .then(function(response) {
-                resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 10.00 <br><span style="font-size: 11pt; font-weight: bold; color: #008000;">✓ Toàn bộ bài làm từ câu 1 - 50 đã được gửi đến Máy Chủ thành công!</span>`;
+                resultBox.innerHTML = `<span style="font-size: 13pt; font-weight: bold; color: #008000;">✓ Toàn bộ bài làm của bạn đã được gửi đi thành công! Chúc bạn đạt kết quả thật cao nhé! 🎉</span>`;
             }, function(error) {
                 console.log('Lỗi kết nối EmailJS:', error);
-                resultBox.innerHTML = `KẾT QUẢ: ${resultString} — Điểm số: ${partsScore} / 10.00 <br><span style="font-size: 11pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại cấu hình API Keys trong code.</span>`;
+                resultBox.innerHTML = `<span style="font-size: 12pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại kết nối mạng hoặc cấu hình API Keys trong mã nguồn nhé Hoàng.</span>`;
             });
     }
 </script>
