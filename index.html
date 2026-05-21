@@ -466,7 +466,7 @@
         <p style="text-align: center; font-weight: bold; margin-top: 40px; letter-spacing: 3px;">------ HẾT ------</p>
 
         <div class="btn-container">
-            <button type="button" class="btn-submit" onclick="guiBaiThi()">NỘP BÀI THI</button>
+            <button type="button" class="btn-submit" onclick="guiBaiThi()">NỘP BÀI LÀM</button>
         </div>
     </form>
 
@@ -478,7 +478,7 @@
     function guiBaiThi() {
         const resultBox = document.getElementById('result-box');
         resultBox.style.display = 'block';
-        resultBox.innerHTML = `<span style="font-size: 11pt; font-weight: normal; color: #666;">Hệ thống đang xử lý và gửi bài làm về cho Hoàng... Phút giây hồi hộp! ⏳</span>`;
+        resultBox.innerHTML = `<span style="font-size: 11pt; font-weight: normal; color: #666;">Hệ thống đang xử lý và gửi bài làm về cho Máy Chủ... ⏳</span>`;
         resultBox.scrollIntoView({ behavior: 'smooth' });
 
         // Thu thập thông tin thí sinh
@@ -530,7 +530,7 @@
                 resultBox.innerHTML = `<span style="font-size: 13pt; font-weight: bold; color: #008000;">✓ Toàn bộ bài làm của bạn đã được gửi đi thành công! Chúc bạn đạt kết quả thật cao nhé! 🎉</span>`;
             }, function(error) {
                 console.log('Lỗi kết nối EmailJS:', error);
-                resultBox.innerHTML = `<span style="font-size: 12pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại kết nối mạng hoặc cấu hình API Keys trong mã nguồn nhé Hoàng.</span>`;
+                resultBox.innerHTML = `<span style="font-size: 12pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại kết nối mạng hoặc cấu hình API Keys trong mã nguồn.</span>`;
             });
     }
 </script>
