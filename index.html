@@ -20,7 +20,40 @@
             font-size: 14pt;
         }
 
-        .paper-page {
+        /* ĐỒNG HỒ ĐẾM NGƯỢC CỐ ĐỊNH GÓC TRÊN BÊN PHẢI */
+        .countdown-timer-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffffff;
+            border: 2px solid #000000;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 16pt;
+            z-index: 9999;
+            box-shadow: 4px 4px 0px #000;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .countdown-label {
+            font-size: 10pt;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
+            color: #555;
+            letter-spacing: 1px;
+        }
+
+        /* Hiệu ứng nhấp nháy khi sắp hết giờ */
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .timer-urgent {
+            animation: blink 1s step-start infinite;
+        }
+
+        #paper-id {
             max-width: 850px;
             margin: 0 auto 20px auto;
             background: var(--bg-color);
@@ -203,13 +236,16 @@
             text-align: center;
             margin-top: 40px;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
-        .btn-submit {
+        .btn-submit, .btn-download {
             font-family: 'Times New Roman', Times, serif;
             font-size: 15pt;
             font-weight: bold;
-            padding: 12px 40px;
+            padding: 12px 30px;
             background-color: #ffffff;
             color: #000000;
             border: 2px solid #000000;
@@ -218,8 +254,31 @@
             transition: 0.2s;
         }
 
-        .btn-submit:hover {
+        .btn-submit:hover, .btn-download:hover {
             background-color: #000000;
+            color: #ffffff;
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        /* Định dạng riêng cho nút tải bài lúc chưa kích hoạt */
+        .btn-download {
+            background-color: #f5f5f5;
+            color: #888888;
+            border-color: #cccccc;
+            box-shadow: 4px 4px 0px #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Lớp kích hoạt nút tải bài */
+        .btn-download.active {
+            background-color: #ffffff;
+            color: #1d70b8;
+            border-color: #1d70b8;
+            box-shadow: 4px 4px 0px #1d70b8;
+            cursor: pointer;
+        }
+        .btn-download.active:hover {
+            background-color: #1d70b8;
             color: #ffffff;
             box-shadow: 0px 0px 0px #000;
         }
@@ -242,6 +301,11 @@
             border-top: 1px dashed #ccc;
             padding-top: 10px;
         }
+
+        /* Loại bỏ đồng hồ khi xuất file tài liệu */
+        .html2pdf__page-break {
+            page-break-before: always;
+        }
     </style>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -250,10 +314,17 @@
           emailjs.init("hK1aROrfrqVaTFDfh"); 
        })();
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
-<div class="paper-page">
+<div class="countdown-timer-box" id="clock-box">
+    <span class="countdown-label">Thời gian còn lại</span>
+    <span id="timer-display">90:00</span>
+</div>
+
+<div id="paper-id">
     <table class="header-table">
         <tr>
             <td class="header-left" style="text-align: left; padding-left: 20px;">
@@ -466,7 +537,8 @@
         <p style="text-align: center; font-weight: bold; margin-top: 40px; letter-spacing: 3px;">------ HẾT ------</p>
 
         <div class="btn-container">
-            <button type="button" class="btn-submit" onclick="guiBaiThi()">NỘP BÀI LÀM</button>
+            <button type="button" class="btn-submit" id="submitBtn" onclick="guiBaiThi(false)">NỘP BÀI LÀM</button>
+            <button type="button" class="btn-download" id="downloadBtn" onclick="taiFileBaiLam()" disabled>TẢI BÀI LÀM (PDF/ẢNH)</button>
         </div>
     </form>
 
@@ -475,27 +547,78 @@
 </div>
 
 <script>
-    function guiBaiThi() {
+    // CẤU HÌNH ĐỒNG HỒ ĐẾM NGƯỢC (90 phút = 5400 giây)
+    let totalSeconds = 90 * 60; 
+    let timerInterval = null;
+    let isSubmitted = false; 
+
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer-display');
+        
+        timerInterval = setInterval(() => {
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.innerHTML = "00:00";
+                timerDisplay.style.color = "#ff0000";
+                timerDisplay.classList.add('timer-urgent');
+                guiBaiThi(true); 
+                return;
+            }
+
+            totalSeconds--;
+
+            let minutes = Math.floor(totalSeconds / 60);
+            let seconds = totalSeconds % 60;
+
+            let displayMin = minutes < 10 ? "0" + minutes : minutes;
+            let displaySec = seconds < 10 ? "0" + seconds : seconds;
+            timerDisplay.innerHTML = `${displayMin}:${displaySec}`;
+
+            if (totalSeconds <= 300) { 
+                timerDisplay.style.color = "#ff0000";
+                timerDisplay.classList.add('timer-urgent');
+            } else if (totalSeconds <= 900) { 
+                timerDisplay.style.color = "#ff6600";
+            }
+        }, 1000);
+    }
+
+    window.onload = function() {
+        startTimer();
+    };
+
+    function guiBaiThi(isTimeUp = false) {
+        if (isSubmitted) return; 
+
         const resultBox = document.getElementById('result-box');
+        const submitBtn = document.getElementById('submitBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+        isSubmitted = true;
+        clearInterval(timerInterval); 
+        submitBtn.disabled = true; 
+        
         resultBox.style.display = 'block';
-        resultBox.innerHTML = `<span style="font-size: 11pt; font-weight: normal; color: #666;">Hệ thống đang xử lý và gửi bài làm về cho Máy Chủ... ⏳</span>`;
+        if (isTimeUp) {
+            resultBox.innerHTML = `<span style="font-size: 11pt; font-weight: bold; color: #ff0000;">⏰ ĐÃ HẾT GIỜ LÀM BÀI! Hệ thống đang tự động khóa đề và gửi bài về cho Máy Chủ...</span>`;
+        } else {
+            resultBox.innerHTML = `<span style="font-size: 11pt; font-weight: normal; color: #666;">Hệ thống đang xử lý và gửi bài làm về cho Máy Chủ... ⏳</span>`;
+        }
         resultBox.scrollIntoView({ behavior: 'smooth' });
 
         // Thu thập thông tin thí sinh
-        const hoTen = document.getElementById('hoc_ten').value.trim() || "Ẩn danh";
-        const lop = document.getElementById('lop').value.trim() || "Không rõ";
-        const sbd = document.getElementById('sbd').value.trim() || "Không rõ";
-        const phongThi = document.getElementById('phong_thi').value.trim() || "Không rõ";
+        const hoTen = document.getElementById('hoc_ten').value.trim() || "An danh";
+        const lop = document.getElementById('lop').value.trim() || "Khong ro";
+        const sbd = document.getElementById('sbd').value.trim() || "Khong ro";
+        const phongThi = document.getElementById('phong_thi').value.trim() || "Khong ro";
 
-        // Thu thập đáp án trắc nghiệm ngắn câu 1 - 42
         let answersLog = "--- BÀI LÀM TRẮC NGHIỆM & TRẢ LỜI NGẮN (CÂU 1 - 42) ---\n";
         for (let i = 1; i <= 42; i++) {
             let userAns = document.getElementById(`ans_q` + i).value.trim();
             answersLog += `Câu ${i}: ${userAns || 'Chưa làm'} | `;
-            if (i % 5 === 0) answersLog += "\n"; // Xuống dòng cho dễ nhìn
+            if (i % 5 === 0) answersLog += "\n";
         }
 
-        // Thu thập đáp án tự luận câu 43 - 50
         const essay43 = document.getElementById('essay_q43').value;
         const essay44 = document.getElementById('essay_q44').value;
         const essay45 = document.getElementById('essay_q45').value;
@@ -505,14 +628,15 @@
         const essay49 = document.getElementById('essay_q49').value;
         const essay50 = document.getElementById('essay_q50').value;
 
-        // Chuẩn bị tham số truyền sang EmailJS mẫu của Hoàng
+        const statusNop = isTimeUp ? "Hết giờ tự động nộp bài" : "Chủ động bấm nộp bài";
+
         const templateParams = {
             hoc_ten: hoTen,
             lop: lop,
             sbd: sbd,
             phong_thi: phongThi,
-            ket_qua_auto: "Tự chấm thủ công", 
-            diem_so: "Chờ chấm",
+            ket_qua_auto: statusNop, 
+            diem_so: "Chờ Hoàng chấm",
             all_answers_1_42: answersLog, 
             essay_43: essay43,
             essay_44: essay44,
@@ -524,14 +648,42 @@
             essay_50: essay50
         };
 
-        // Tiến hành gửi qua EmailJS
         emailjs.send('service_eekin7r', 'template_4uwbkqs', templateParams)
             .then(function(response) {
-                resultBox.innerHTML = `<span style="font-size: 13pt; font-weight: bold; color: #008000;">✓ Toàn bộ bài làm của bạn đã được gửi đi thành công! Chúc bạn đạt kết quả thật cao nhé! 🎉</span>`;
+                if (isTimeUp) {
+                    resultBox.innerHTML = `<span style="font-size: 13pt; font-weight: bold; color: #ff6600;">⏰ Hết giờ! Bài làm đã được khóa và gửi thành công! Bạn có thể tải bài làm ở nút phía trên.</span>`;
+                } else {
+                    resultBox.innerHTML = `<span style="font-size: 13pt; font-weight: bold; color: #008000;">✓ Toàn bộ bài làm đã được gửi thành công! Bạn có thể bấm nút màu xanh phía trên để tải file bài làm nhé! 🎉</span>`;
+                }
+                
+                // KÍCH HOẠT NÚT TẢI BÀI LÀM SAU KHI NỘP THÀNH CÔNG
+                downloadBtn.disabled = false;
+                downloadBtn.classList.add('active');
+                
             }, function(error) {
                 console.log('Lỗi kết nối EmailJS:', error);
-                resultBox.innerHTML = `<span style="font-size: 12pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại kết nối mạng hoặc cấu hình API Keys trong mã nguồn.</span>`;
+                resultBox.innerHTML = `<span style="font-size: 12pt; font-weight: bold; color: #ff0000;">✗ Lỗi gửi bài! Vui lòng kiểm tra lại cấu hình API Keys nhé.</span>`;
             });
+    }
+
+    // HÀM XỬ LÝ CHỤP VÀ TẢI BÀI LÀM ĐẸP MẮT
+    function taiFileBaiLam() {
+        if (!isSubmitted) return; // Bảo mật: Chưa nộp bài thì không cho tải file
+
+        const hoTen = document.getElementById('hoc_ten').value.trim() || "Hoc_Sinh";
+        const element = document.getElementById('paper-id');
+        
+        // Cấu hình định dạng file tải về chất lượng cao
+        const opt = {
+            margin:       [10, 10, 10, 10],
+            filename:     `Bai_Lam_Toan_6_${hoTen}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, logging: false },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Tiến hành chụp khung đề thi và tải xuống máy học sinh
+        html2pdf().set(opt).from(element).save();
     }
 </script>
 
